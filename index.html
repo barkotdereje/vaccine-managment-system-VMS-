@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container-fluid">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-syringe"></i>
+                    <span>Vaccine Management System</span>
+                </div>
+                <nav class="main-nav">
+                    <a href="#home" class="nav-link active" onclick="showPage('home', event)">Home</a>
+                    <a href="#login-select" class="nav-link" onclick="showPage('login-select', event)">Login</a>
+                    <a href="#contact" class="nav-link" onclick="showPage('contact', event)">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main id="main-content">
+        <!-- Home Page -->
+        <section id="home" class="page-section active">
+             <div class="hero-section"
+         style="
+            background:
+            linear-gradient(rgba(3, 35, 67, 0.7), rgba(1, 18, 30, 0.7)),
+            url('https://www.shutterstock.com/image-photo/two-syringes-ampoules-medicine-without-260nw-1671894049.jpg');
+            background-size: cover;
+            background-position: center;
+         ">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Vaccine Management System</h1>
+                        <p class="hero-text">
+                            The Vaccine Management System (VMS) replaces outdated manual vaccination processes 
+                            with a centralized digital solution. By simplifying data handling, appointment scheduling, 
+                            and vaccine stock management, VMS improves the accuracy and efficiency of public health services.
+                        </p>
+                        <button class="btn-custom btn-lg" onclick="showPage('login-select')">
+                            <i class="fas fa-rocket me-2"></i>Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container py-5">
+                <div class="text-center mb-5" >
+                    <h2 text-align: center>Why Choose Our System?</h2>
+                    <p text-align: center class="subtitle">Fast, Digital & Automated Vaccination Platform For You</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Secure & Reliable</h3>
+                        <p>Bank-level security for all health data with encrypted storage and backup</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Fast Processing</h3>
+                        <p>Instant appointment scheduling with real-time availability updates</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Real-time Analytics</h3>
+                        <p>Monitor vaccination coverage and generate comprehensive reports</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Selection Page -->
+        <section id="login-select" class="page-section">
+            <div class="container py-5">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i class="fas fa-sign-in-alt me-2"></i>Select Login Type</h2>
+                    </div>
+                    
+                    <div class="form-body">
+                        <div class="login-options">
+                            <div class="login-option" onclick="showPage('nurse-login')">
+                                <div class="login-icon">
+                                    <i class="fas fa-user-nurse"></i>
+                                </div>
+                                <h3>Nurse Login</h3>
+                                <p>Access patient registration, vaccination scheduling, and notifications</p>
+                              
+                            </div>
+                            
+                            <div class="login-option" onclick="showPage('admin-login')">
+                                <div class="login-icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <h3>Admin Login</h3>
+                                <p>Full system access including stock management and reports</p>
+                              
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <button class="btn-custom btn-back" onclick="showPage('home')">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Home
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Login Page -->
+        <section id="admin-login" class="page-section">
+            <div class="container py-5">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i class="fas fa-user-shield me-2"></i>Admin Login</h2>
+                    </div>
+                    
+                    <div class="form-body">
+                        <form id="adminLoginForm">
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="adminUsername" 
+                                       placeholder="Enter username" required>
+                                <div class="invalid-feedback" id="adminUsernameError">
+                                    Please enter a valid username
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <div class="password-input">
+                                    <input type="password" class="form-control" id="adminPassword" 
+                                           placeholder="Enter password" required>
+                                    <button type="button" class="toggle-password" onclick="togglePassword('adminPassword', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="adminPasswordError">
+                                    Password must be at least 6 characters
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-group mt-4">
+                                <button type="button" class="btn-custom btn-success w-100" onclick="handleAdminLogin()">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login as Admin
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn-custom btn-back" onclick="showPage('login-select')">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Login Selection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nurse Login Page -->
+        <section id="nurse-login" class="page-section">
+            <div class="container py-5">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i class="fas fa-user-nurse me-2"></i>Nurse Login</h2>
+                    </div>
+                    
+                    <div class="form-body">
+                        <form id="nurseLoginForm">
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="nurseUsername" 
+                                       placeholder="Enter username" required>
+                                <div class="invalid-feedback" id="nurseUsernameError">
+                                    Please enter a valid username
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <div class="password-input">
+                                    <input type="password" class="form-control" id="nursePassword" 
+                                           placeholder="Enter password" required>
+                                    <button type="button" class="toggle-password" onclick="togglePassword('nursePassword', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="nursePasswordError">
+                                    Password must be at least 6 characters
+                                </div>
+                            </div>
+                            
+                            <div class="form-group mt-4">
+                                <button type="button" class="btn-custom btn-primary w-100" onclick="handleNurseLogin()">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login as Nurse
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn-custom btn-back" onclick="showPage('login-select')">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Login Selection
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard -->
+        <section id="admin-dashboard" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-user-shield me-2"></i>Admin Panel</h2>
+                        <p class="dashboard-subtitle">Full system control and management</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('login-select')">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </button>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" onclick="showPage('stock')">
+                        <div class="card-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h3>Vaccine Stock</h3>
+                        <p>Manage vaccine inventory and stock levels</p>
+                    </div>
+                    
+                    <div class="dashboard-card" onclick="showPage('schedule-admin')">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>All Schedules</h3>
+                        <p>View and manage all vaccination schedules</p>
+                    </div>
+                    
+                    <div class="dashboard-card" onclick="showPage('all-records')">
+                        <div class="card-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3>All Records</h3>
+                        <p>Complete vaccination records</p>
+                    </div>
+                    
+                    <div class="dashboard-card" onclick="showPage('reports')">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>Reports</h3>
+                        <p>Generate system reports and analytics</p>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-chart-line me-2"></i>System Statistics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Value</th>
+                                        <th>Status</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Vaccinations</td>
+                                        <td><strong>1,245</strong></td>
+                                        <td><span class="badge bg-success">Good</span></td>
+                                        <td><i class="fas fa-arrow-up text-success me-1"></i>12%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vaccine Stock</td>
+                                        <td><strong>85%</strong></td>
+                                        <td><span class="badge bg-warning">Monitor</span></td>
+                                        <td><i class="fas fa-arrow-down text-warning me-1"></i>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Active Patients</td>
+                                        <td><strong>342</strong></td>
+                                        <td><span class="badge bg-success">Good</span></td>
+                                        <td><i class="fas fa-arrow-up text-success me-1"></i>8%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Records Page (Admin) -->
+        <section id="all-records" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-clipboard-list me-2"></i>All Vaccination Records</h2>
+                        <p class="dashboard-subtitle">Complete vaccination history for all patients</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('admin-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchAllRecords" placeholder="Search by patient ID, name, or vaccine type">
+                            <button class="btn btn-primary" onclick="searchAllRecords()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <select class="form-control" id="filterAllStatus">
+                                <option value="">All Status</option>
+                                <option value="completed">Completed</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="filterAllRecords()">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-history me-2"></i>Vaccination History</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="allRecordsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient ID</th>
+                                        <th>Patient Name</th>
+                                        <th>Vaccine Type</th>
+                                        <th>Date</th>
+                                        <th>Dose</th>
+                                        <th>Status</th>
+                                        <th>Nurse</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-id="PAT001" data-name="eliana alemu" data-vaccine="Polio Vaccine" data-status="completed">
+                                        <td>PAT001</td>
+                                        <td><strong>eliana alemu</strong></td>
+                                        <td>Polio Vaccine</td>
+                                        <td>2025-11-26</td>
+                                        <td>1st Dose</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>Nurse hana</td>
+                                    </tr>
+                                    <tr data-id="PAT002" data-name="amnen moges" data-vaccine="COVID-19 Booster" data-status="scheduled">
+                                        <td>PAT002</td>
+                                        <td><strong>amnen moges</strong></td>
+                                        <td>COVID-19 Booster</td>
+                                        <td>2025-11-27</td>
+                                        <td>3rd Dose</td>
+                                        <td><span class="badge bg-warning">Scheduled</span></td>
+                                        <td>Nurse debebe</td>
+                                    </tr>
+                                    <tr data-id="PAT003" data-name="lily gebru" data-vaccine="Influenza" data-status="pending">
+                                        <td>PAT003</td>
+                                        <td><strong>lily gebru</strong></td>
+                                        <td>Influenza</td>
+                                        <td>2025-11-28</td>
+                                        <td>Annual</td>
+                                        <td><span class="badge bg-danger">Pending</span></td>
+                                        <td>Nurse Mahder</td>
+                                    </tr>
+                                    <tr data-id="PAT004" data-name="michael demse" data-vaccine="Hepatitis B" data-status="completed">
+                                        <td>PAT004</td>
+                                        <td><strong>michael demse</strong></td>
+                                        <td>Hepatitis B</td>
+                                        <td>2025-11-25</td>
+                                        <td>2nd Dose</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>Nurse aster</td>
+                                    </tr>
+                                    <tr data-id="PAT005" data-name="amanuel getu" data-vaccine="Measles" data-status="completed">
+                                        <td>PAT005</td>
+                                        <td><strong>amanuel getu</strong></td>
+                                        <td>Measles</td>
+                                        <td>2025-11-24</td>
+                                        <td>1st Dose</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>Nurse luel</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Page (Admin) -->
+        <section id="reports" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-chart-bar me-2"></i>System Reports</h2>
+                        <p class="dashboard-subtitle">Generate and view system analytics and reports</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('admin-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Vaccination Coverage</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-center">85%</h4>
+                                <p class="text-center text-muted">Total Population Vaccinated</p>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0"><i class="fas fa-syringe me-2"></i>Vaccine Usage</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-center">2,450</h4>
+                                <p class="text-center text-muted">Doses Administered</p>
+                                <p class="text-center"><small>This Month: 245 doses</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header bg-warning text-white">
+                                <h5 class="mb-0"><i class="fas fa-users me-2"></i>Patient Statistics</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="text-center">1,245</h4>
+                                <p class="text-center text-muted">Total Patients Registered</p>
+                                <p class="text-center"><small>Active: 342 patients</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-file-alt me-2"></i>Report Generation</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Report Type</label>
+                                    <select class="form-control" id="reportType">
+                                        <option value="vaccination">Vaccination Report</option>
+                                        <option value="stock">Stock Report</option>
+                                        <option value="patient">Patient Report</option>
+                                        <option value="monthly">Monthly Summary</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Date Range</label>
+                                    <select class="form-control" id="dateRange">
+                                        <option value="today">Today</option>
+                                        <option value="week">This Week</option>
+                                        <option value="month">This Month</option>
+                                        <option value="quarter">This Quarter</option>
+                                        <option value="year">This Year</option>
+                                        <option value="custom">Custom Range</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="customDateRange" style="display: none;">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="endDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn-custom btn-primary" onclick="generateReport()">
+                                <i class="fas fa-download me-2"></i>Generate Report
+                            </button>
+                            <button class="btn-custom btn-success" onclick="exportToPDF()">
+                                <i class="fas fa-file-export me-2"></i>Export to PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nurse Dashboard -->
+        <section id="nurse-dashboard" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-user-nurse me-2"></i>Nurse Dashboard</h2>
+                        <p class="dashboard-subtitle">Manage patient registrations, vaccinations, and notifications</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('login-select')">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </button>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" onclick="showPage('patient-register')">
+                        <div class="card-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3>Register Patient</h3>
+                        <p>Register new patients for vaccination</p>
+                    </div>
+                    
+                    <div class="dashboard-card" onclick="showPage('schedule')">
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Today's Schedule</h3>
+                        <p>View today's vaccination appointments</p>
+                    </div>
+                    
+                    <div class="dashboard-card" onclick="showPage('vaccination-history')">
+                        <div class="card-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>Vaccination History</h3>
+                        <p>View patient vaccination records</p>
+                    </div>
+                    
+                    <div class="dashboard-card" onclick="showPage('notify-patients')">
+                        <div class="card-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3>Notify Patients</h3>
+                        <p>Send reminders to patients</p>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-clock me-2"></i>Recent Activities</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Patient</th>
+                                        <th>Vaccine</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>eliana alemu</strong></td>
+                                        <td>Polio Vaccine</td>
+                                        <td>2025-11-26</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>amnen moges</strong></td>
+                                        <td>COVID-19 Booster</td>
+                                        <td>2025-11-27</td>
+                                        <td><span class="badge bg-warning">Scheduled</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>lily gebru</strong></td>
+                                        <td>Influenza</td>
+                                        <td>2025-11-28</td>
+                                        <td><span class="badge bg-danger">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vaccination History Page (Nurse) -->
+        <section id="vaccination-history" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-history me-2"></i>Vaccination History</h2>
+                        <p class="dashboard-subtitle">View patient vaccination records and history</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('nurse-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchPatient" placeholder="Search by patient ID or name">
+                            <button class="btn btn-primary" onclick="searchPatientHistory()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <select class="form-control" id="filterVaccine">
+                                <option value="">All Vaccines</option>
+                                <option value="polio">Polio</option>
+                                <option value="covid">COVID-19</option>
+                                <option value="influenza">Influenza</option>
+                                <option value="hepatitis">Hepatitis B</option>
+                                <option value="measles">Measles</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="filterVaccineHistory()">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-syringe me-2"></i>Patient Vaccination Records</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="vaccinationHistoryTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient</th>
+                                        <th>Age</th>
+                                        <th>Vaccine</th>
+                                        <th>Dose</th>
+                                        <th>Date</th>
+                                        <th>Next Due</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-id="PAT001" data-name="eliana alemu" data-vaccine="Polio Vaccine">
+                                        <td><strong>eliana alemu</strong><br><small class="text-muted">ID: PAT001</small></td>
+                                        <td>10 years</td>
+                                        <td>Polio Vaccine</td>
+                                        <td>1st Dose</td>
+                                        <td>2025-11-26</td>
+                                        <td>2026-11-26</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr data-id="PAT002" data-name="amnen moges" data-vaccine="COVID-19 Booster">
+                                        <td><strong>amnen moges</strong><br><small class="text-muted">ID: PAT002</small></td>
+                                        <td>35 years</td>
+                                        <td>COVID-19 Booster</td>
+                                        <td>3rd Dose</td>
+                                        <td>2025-11-27</td>
+                                        <td>2026-05-27</td>
+                                        <td><span class="badge bg-warning">Scheduled</span></td>
+                                    </tr>
+                                    <tr data-id="PAT003" data-name="lily gebru" data-vaccine="Influenza">
+                                        <td><strong>lily gebru</strong><br><small class="text-muted">ID: PAT003</small></td>
+                                        <td>65 years</td>
+                                        <td>Influenza</td>
+                                        <td>Annual</td>
+                                        <td>2025-11-28</td>
+                                        <td>2026-11-28</td>
+                                        <td><span class="badge bg-danger">Pending</span></td>
+                                    </tr>
+                                    <tr data-id="PAT004" data-name="michael demse" data-vaccine="Hepatitis B">
+                                        <td><strong>michael demse</strong><br><small class="text-muted">ID: PAT004</small></td>
+                                        <td>42 years</td>
+                                        <td>Hepatitis B</td>
+                                        <td>2nd Dose</td>
+                                        <td>2025-11-25</td>
+                                        <td>2025-12-25</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notify Patients Page (Nurse) -->
+        <section id="notify-patients" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-bell me-2"></i>Notify Patients</h2>
+                        <p class="dashboard-subtitle">Send reminders and notifications to patients</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('nurse-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="mb-0"><i class="fas fa-envelope me-2"></i>Send Notification</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Select Patients</label>
+                                    <select class="form-control" id="selectPatients" multiple>
+                                        <option value="PAT001">eliana alemu (PAT001)</option>
+                                        <option value="PAT002">amnen moges (PAT002)</option>
+                                        <option value="PAT003">lily gebru (PAT003)</option>
+                                        <option value="PAT004">michael demse (PAT004)</option>
+                                        <option value="all">All Patients</option>
+                                    </select>
+                                    <small class="text-muted">Hold Ctrl/Cmd to select multiple patients</small>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Notification Type</label>
+                                    <select class="form-control" id="notificationType">
+                                        <option value="appointment">Appointment Reminder</option>
+                                        <option value="vaccine_due">Vaccine Due</option>
+                                        <option value="follow_up">Follow-up</option>
+                                        <option value="general">General Information</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" id="notificationMessage" rows="4" placeholder="Enter your notification message..."></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Delivery Method</label>
+                                    <div class="delivery-methods">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="deliverySMS" checked>
+                                            <label class="form-check-label" for="deliverySMS">
+                                                <i class="fas fa-sms me-2"></i>SMS
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="deliveryEmail" checked>
+                                            <label class="form-check-label" for="deliveryEmail">
+                                                <i class="fas fa-envelope me-2"></i>Email
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="deliveryApp">
+                                            <label class="form-check-label" for="deliveryApp">
+                                                <i class="fas fa-bell me-2"></i>In-App Notification
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-custom btn-primary w-100" onclick="sendNotification()">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Notification
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="reminders-container">
+                            <div class="card-header">
+                                <h3 class="mb-0"><i class="fas fa-clock me-2"></i>Upcoming Reminders</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="reminder-item success">
+                                    <div class="reminder-header">
+                                        <h6 class="reminder-title">Polio Vaccine - 2nd Dose</h6>
+                                        <span class="reminder-time">Tomorrow</span>
+                                    </div>
+                                    <p class="reminder-patient">eliana alemu (PAT001)</p>
+                                </div>
+                                <div class="reminder-item warning">
+                                    <div class="reminder-header">
+                                        <h6 class="reminder-title">COVID-19 Booster</h6>
+                                        <span class="reminder-time">In 3 days</span>
+                                    </div>
+                                    <p class="reminder-patient">amnen moges (PAT002)</p>
+                                </div>
+                                <div class="reminder-item">
+                                    <div class="reminder-header">
+                                        <h6 class="reminder-title">Influenza Vaccine</h6>
+                                        <span class="reminder-time">In 1 week</span>
+                                    </div>
+                                    <p class="reminder-patient">lily gebru (PAT003)</p>
+                                </div>
+                                <div class="reminder-item danger">
+                                    <div class="reminder-header">
+                                        <h6 class="reminder-title">Hepatitis B - 3rd Dose</h6>
+                                        <span class="reminder-time">In 2 weeks</span>
+                                    </div>
+                                    <p class="reminder-patient">michael demse (PAT004)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patient Registration -->
+        <section id="patient-register" class="page-section">
+            <div class="container py-4">
+                <div class="form-container wide-form">
+                    <div class="form-header">
+                        <h2><i class="fas fa-user-plus me-2"></i>Patient Registration</h2>
+                        <p>Register new patients for vaccination</p>
+                    </div>
+                    
+                    <div class="form-body">
+                        <form id="patientRegistrationForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="firstName" 
+                                               placeholder="Enter first name" required>
+                                        <div class="invalid-feedback" id="firstNameError">
+                                            Please enter a valid first name (2-50 letters)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="lastName" 
+                                               placeholder="Enter last name" required>
+                                        <div class="invalid-feedback" id="lastNameError">
+                                            Please enter a valid last name (2-50 letters)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="birthDate" required>
+                                        <div class="invalid-feedback" id="birthDateError">
+                                            Please select a valid date of birth (age must be 0-120 years)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Gender <span class="text-danger">*</span></label>
+                                        <select class="form-control" id="gender" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                        <div class="invalid-feedback" id="genderError">
+                                            Please select a gender
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                        <input type="tel" class="form-control" id="phone" 
+                                               placeholder="Enter phone number (10-15 digits)" required>
+                                        <div class="invalid-feedback" id="phoneError">
+                                            Please enter a valid phone number (10-15 digits)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" 
+                                               placeholder="Enter email address" required>
+                                        <div class="invalid-feedback" id="emailError">
+                                            Please enter a valid email address
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" id="address" rows="2" 
+                                          placeholder="Enter full address"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Medical Conditions (if any)</label>
+                                <textarea class="form-control" id="medicalConditions" rows="3" 
+                                          placeholder="List any communicable diseases or medical conditions"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Preferred Vaccination Center</label>
+                                <select class="form-control" id="vaccinationCenter">
+                                    <option value="">Select Center</option>
+                                    <option value="Main Health Center">Main Health Center</option>
+                                    <option value="North District Hospital">Asrat Weldeyes</option>
+                                    <option value="South Community Clinic">Tena Tabia</option>
+                                    <option value="West Medical Center">private Medical Center</option>
+                                </select>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn-custom btn-success" id="registerPatientBtn">
+                                    <i class="fas fa-check-circle me-2"></i>Register Patient
+                                </button>
+                                <button type="button" class="btn-custom btn-secondary" id="resetFormBtn">
+                                    <i class="fas fa-redo me-2"></i>Reset Form
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <button class="btn-custom btn-back me-2" onclick="showPage('nurse-dashboard')">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                            </button>
+                            <button class="btn-custom" onclick="showPage('home')">
+                                <i class="fas fa-home me-2"></i>Back to Home
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Page (Nurse) -->
+        <section id="schedule" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-calendar-alt me-2"></i>Today's Appointments</h2>
+                        <p class="dashboard-subtitle">November 27, 2025</p>
+                    </div>
+                    <div>
+                        <button class="btn-custom btn-back me-2" onclick="showPage('nurse-dashboard')">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                        </button>
+                        <button class="btn-custom btn-primary" onclick="showModal('addAppointmentModal')">
+                            <i class="fas fa-plus me-2"></i>Add Appointment
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Patient</th>
+                                        <th>Age</th>
+                                        <th>Vaccine</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>eliana alemu</strong><br>
+                                            <small class="text-muted">ID: PAT001</small>
+                                        </td>
+                                        <td>10 years</td>
+                                        <td>Polio Vaccine</td>
+                                        <td>10:00 AM</td>
+                                        <td><span class="badge bg-success">Confirmed</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success" onclick="markAppointmentDone('PAT001')">
+                                                <i class="fas fa-check me-1"></i>Mark Done
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>amnen moges</strong><br>
+                                            <small class="text-muted">ID: PAT002</small>
+                                        </td>
+                                        <td>35 years</td>
+                                        <td>COVID-19 Booster</td>
+                                        <td>11:30 AM</td>
+                                        <td><span class="badge bg-warning">Scheduled</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success" onclick="markAppointmentDone('PAT002')">
+                                                <i class="fas fa-check me-1"></i>Mark Done
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>lily gebru</strong><br>
+                                            <small class="text-muted">ID: PAT003</small>
+                                        </td>
+                                        <td>65 years</td>
+                                        <td>Influenza Vaccine</td>
+                                        <td>02:00 PM</td>
+                                        <td><span class="badge bg-danger">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-success" onclick="markAppointmentDone('PAT003')">
+                                                <i class="fas fa-check me-1"></i>Mark Done
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Page (Admin) -->
+        <section id="schedule-admin" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-calendar-check me-2"></i>All Schedules</h2>
+                        <p class="dashboard-subtitle">View and manage all vaccination schedules</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('admin-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Patient ID</th>
+                                        <th>Patient Name</th>
+                                        <th>Vaccine</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                        <th>Assigned Nurse</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>PAT001</td>
+                                        <td><strong>eliana alemu</strong></td>
+                                        <td>Polio Vaccine</td>
+                                        <td>2025-11-26</td>
+                                        <td>10:00 AM</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>Nurse Sarah</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PAT002</td>
+                                        <td><strong>amnen moges</strong></td>
+                                        <td>COVID-19 Booster</td>
+                                        <td>2025-11-27</td>
+                                        <td>11:30 AM</td>
+                                        <td><span class="badge bg-warning">Scheduled</span></td>
+                                        <td>Nurse John</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PAT003</td>
+                                        <td><strong>lily gebru</strong></td>
+                                        <td>Influenza Vaccine</td>
+                                        <td>2025-11-28</td>
+                                        <td>02:00 PM</td>
+                                        <td><span class="badge bg-danger">Pending</span></td>
+                                        <td>Nurse Mary</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PAT004</td>
+                                        <td><strong>michael demse</strong></td>
+                                        <td>Hepatitis B</td>
+                                        <td>2025-11-25</td>
+                                        <td>09:00 AM</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>Nurse Sarah</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stock Page -->
+        <section id="stock" class="page-section">
+            <div class="container py-4">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h2><i class="fas fa-boxes me-2"></i>Vaccine Stock Inventory</h2>
+                        <p class="dashboard-subtitle">Manage vaccine inventory, stock levels, and expiry dates</p>
+                    </div>
+                    <button class="btn-custom btn-back" onclick="showPage('admin-dashboard')">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </button>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary">
+                                <i class="fas fa-syringe"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>15</h3>
+                                <p>Vaccine Types</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="fas fa-pills"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>2,450</h3>
+                                <p>Total Doses</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>3</h3>
+                                <p>Low Stock Items</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-danger">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>2</h3>
+                                <p>Expiring Soon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0"><i class="fas fa-box-open me-2"></i>Current Vaccine Stock</h3>
+                        <button class="btn-custom btn-primary" onclick="showModal('addStockModal')">
+                            <i class="fas fa-plus me-2"></i>Add Stock
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Vaccine</th>
+                                        <th>Batch No.</th>
+                                        <th>Quantity</th>
+                                        <th>Expiry Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Polio Vaccine</strong></td>
+                                        <td>POL-2024-001</td>
+                                        <td>120</td>
+                                        <td>2026-03-12</td>
+                                        <td><span class="badge bg-success">In Stock</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editStock('POL-2024-001')">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteStock('POL-2024-001')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>COVID-19 Booster</strong></td>
+                                        <td>COV-2025-045</td>
+                                        <td>85</td>
+                                        <td>2025-12-15</td>
+                                        <td><span class="badge bg-warning">Low Stock</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editStock('COV-2025-045')">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteStock('COV-2025-045')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Influenza Vaccine</strong></td>
+                                        <td>FLU-2025-023</td>
+                                        <td>45</td>
+                                        <td>2025-11-30</td>
+                                        <td><span class="badge bg-danger">Expiring Soon</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editStock('FLU-2025-023')">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteStock('FLU-2025-023')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page-section">
+            <div class="container py-5">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2><i class="fas fa-envelope me-2"></i>Contact Us</h2>
+                        <p>Have questions? We're here to help!</p>
+                    </div>
+                    
+                    <div class="form-body">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-control" id="contactName" 
+                                       placeholder="Enter your name" required>
+                                <div class="invalid-feedback" id="contactNameError">
+                                    Please enter your name
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="contactEmail" 
+                                       placeholder="Enter your email" required>
+                                <div class="invalid-feedback" id="contactEmailError">
+                                    Please enter a valid email address
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" id="contactMessage" rows="4" 
+                                          placeholder="Enter your message" required></textarea>
+                                <div class="invalid-feedback" id="contactMessageError">
+                                    Please enter your message
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="btn-custom w-100" onclick="handleContact()">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <button class="btn-custom btn-back" onclick="showPage('home')">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Home
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Vaccine Management System. All rights reserved.</p>
+                <p class="footer-contact">
+                    <i class="fas fa-envelope me-2"></i>VaccineManagementSystem@gmail.com
+                    <span class="mx-3">|</span>
+                    <i class="fas fa-phone me-2"></i>(251) 011-681-123
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Registration Success Modal -->
+    <div class="modal" id="registrationSuccessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="fas fa-check-circle me-2"></i>Registration Successful!</h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="hideModal('registrationSuccessModal')"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h4 id="successTitle">Patient Registered Successfully!</h4>
+                        <p class="text-muted" id="successMessage">Patient has been successfully registered in the Vaccine Management System.</p>
+                    </div>
+                    
+                    <div class="patient-details">
+                        <h5><i class="fas fa-user-check me-2"></i>Registered Patient Details</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Patient ID:</strong> <span id="modalPatientId">Loading...</span></p>
+                                <p><strong>Full Name:</strong> <span id="modalFullName">Loading...</span></p>
+                                <p><strong>Date of Birth:</strong> <span id="modalBirthDate">Loading...</span></p>
+                                <p><strong>Age:</strong> <span id="modalAge">Loading...</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Gender:</strong> <span id="modalGender">Loading...</span></p>
+                                <p><strong>Contact:</strong> <span id="modalContact">Loading...</span></p>
+                                <p><strong>Email:</strong> <span id="modalEmail">Loading...</span></p>
+                                <p><strong>Vaccination Center:</strong> <span id="modalCenter">Not specified</span></p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <p><strong>Address:</strong> <span id="modalAddress">Not provided</span></p>
+                                <p><strong>Medical Conditions:</strong> <span id="modalMedical">None reported</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success mt-3">
+                        <i class="fas fa-envelope me-2"></i>
+                        A confirmation email has been sent to <strong id="modalEmailSent"></strong>.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="hideModal('registrationSuccessModal')">Close</button>
+                    <button type="button" class="btn btn-success" onclick="showPage('schedule'); hideModal('registrationSuccessModal')">
+                        <i class="fas fa-calendar-plus me-2"></i>Schedule Appointment
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="showPage('patient-register'); hideModal('registrationSuccessModal'); document.getElementById('patientRegistrationForm').reset(); clearAllErrors();">
+                        <i class="fas fa-user-plus me-2"></i>Register Another
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div class="modal" id="addAppointmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-calendar-plus me-2"></i>Add New Appointment</h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="hideModal('addAppointmentModal')"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAppointmentForm">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Patient Name</label>
+                            <input type="text" class="form-control" id="appointmentPatientName" 
+                                   placeholder="Enter patient name" required>
+                            <div class="invalid-feedback" id="appointmentPatientNameError">
+                                Please enter patient name
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Vaccine Type</label>
+                            <select class="form-control" id="appointmentVaccineType" required>
+                                <option value="">Select Vaccine</option>
+                                <option value="polio">Polio</option>
+                                <option value="covid">COVID-19</option>
+                                <option value="influenza">Influenza</option>
+                                <option value="hepatitis">Hepatitis B</option>
+                                <option value="measles">Measles</option>
+                            </select>
+                            <div class="invalid-feedback" id="appointmentVaccineTypeError">
+                                Please select vaccine type
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" id="appointmentDate" required>
+                            <div class="invalid-feedback" id="appointmentDateError">
+                                Please select date
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label">Time</label>
+                            <input type="time" class="form-control" id="appointmentTime" required>
+                            <div class="invalid-feedback" id="appointmentTimeError">
+                                Please select time
+                            </div>
+                        </div>
+                        <div class="modal-footer p-0 pt-3">
+                            <button type="button" class="btn btn-secondary" onclick="hideModal('addAppointmentModal')">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="handleAppointment()">
+                                <i class="fas fa-save me-2"></i>Save Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Stock Modal -->
+    <div class="modal" id="addStockModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Add New Vaccine Stock</h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="hideModal('addStockModal')"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addStockForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Vaccine Name</label>
+                                    <input type="text" class="form-control" id="vaccineName" required>
+                                    <div class="invalid-feedback" id="vaccineNameError">
+                                        Please enter vaccine name
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Batch Number</label>
+                                    <input type="text" class="form-control" id="batchNumber" required>
+                                    <div class="invalid-feedback" id="batchNumberError">
+                                        Please enter batch number
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Quantity</label>
+                                    <input type="number" class="form-control" id="stockQuantity" min="1" required>
+                                    <div class="invalid-feedback" id="stockQuantityError">
+                                        Please enter valid quantity (minimum 1)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Expiry Date</label>
+                                    <input type="date" class="form-control" id="expiryDate" required>
+                                    <div class="invalid-feedback" id="expiryDateError">
+                                        Please select expiry date
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Manufacturer</label>
+                                    <input type="text" class="form-control" id="manufacturer" required>
+                                    <div class="invalid-feedback" id="manufacturerError">
+                                        Please enter manufacturer
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Storage Temperature</label>
+                                    <input type="text" class="form-control" id="storageTemperature" 
+                                           placeholder="e.g., 2-8°C" required>
+                                    <div class="invalid-feedback" id="storageTemperatureError">
+                                        Please enter storage temperature
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer p-0 pt-3">
+                            <button type="button" class="btn btn-secondary" onclick="hideModal('addStockModal')">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="handleStock()">
+                                <i class="fas fa-save me-2"></i>Add to Stock
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Details Modal -->
+    <div class="modal" id="patientDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-user me-2"></i>Patient Details</h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="hideModal('patientDetailsModal')"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="patient-details-modal">
+                        <h5><i class="fas fa-info-circle me-2"></i>Patient Information</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Patient ID:</strong> <span id="detailPatientId">-</span></p>
+                                <p><strong>Full Name:</strong> <span id="detailFullName">-</span></p>
+                                <p><strong>Age:</strong> <span id="detailAge">-</span></p>
+                                <p><strong>Gender:</strong> <span id="detailGender">-</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Contact:</strong> <span id="detailContact">-</span></p>
+                                <p><strong>Email:</strong> <span id="detailEmail">-</span></p>
+                                <p><strong>Vaccination Center:</strong> <span id="detailCenter">-</span></p>
+                                <p><strong>Status:</strong> <span id="detailStatus">-</span></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <h5><i class="fas fa-syringe me-2"></i>Vaccination Details</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Vaccine Type:</strong> <span id="detailVaccine">-</span></p>
+                                <p><strong>Dose:</strong> <span id="detailDose">-</span></p>
+                                <p><strong>Date:</strong> <span id="detailDate">-</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Next Due:</strong> <span id="detailNextDue">-</span></p>
+                                <p><strong>Assigned Nurse:</strong> <span id="detailNurse">-</span></p>
+                                <p><strong>Batch Number:</strong> <span id="detailBatch">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="hideModal('patientDetailsModal')">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.c om/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
